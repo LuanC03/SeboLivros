@@ -1,17 +1,6 @@
 import { LoadAuthenticationAdmApi } from '@/data/contracts/apis'
+import { AuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
-import { Authentication } from '@/domain/features/authentication'
-
-class AuthenticationService {
-  constructor (
-    private readonly loadAuthenticationAdmApi: LoadAuthenticationAdmApi
-  ) {}
-
-  async perform (params: Authentication.Params): Promise<AuthenticationError> {
-    await this.loadAuthenticationAdmApi.loadAdm(params)
-    return new AuthenticationError()
-  }
-}
 
 class LoadAuthenticationAdmApiSpy implements LoadAuthenticationAdmApi {
   user?: string
