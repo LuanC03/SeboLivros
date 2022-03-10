@@ -16,6 +16,7 @@ export namespace LoadAdmAccountRepository {
     email: string
     user: string
     id: number
+    password: string
   }
 }
 
@@ -26,6 +27,18 @@ export interface CreateAdmAccountRepository {
 export namespace CreateAdmAccountRepository {
   export type Params = {
     user: string
+    password: string
+    email: string
+    name: string
+  }
+}
+
+export interface UpdateAdmAccountRepository {
+  updateAdm: (params: UpdateAdmAccountRepository.Params) => Promise<void>
+}
+
+export namespace UpdateAdmAccountRepository {
+  export type Params = {
     password: string
     email: string
     name: string
