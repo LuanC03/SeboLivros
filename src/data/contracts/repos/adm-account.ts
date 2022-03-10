@@ -11,5 +11,24 @@ export namespace LoadAdmAccountRepository {
     password: string
   }
 
-  export type Result = undefined
+  export type Result = undefined | {
+    name: string
+    email: string
+    user: string
+    id: number
+  }
+}
+
+export interface CreateAdmAccountRepository {
+  createAdm: (params: CreateAdmAccountRepository.Params) => Promise<void>
+}
+
+export namespace CreateAdmAccountRepository {
+  export type Params = {
+    user: string
+    password: string
+    email: string
+    name: string
+  }
+
 }
