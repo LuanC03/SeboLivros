@@ -3,13 +3,12 @@ import { LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/con
 
 export class AuthenticationService {
   constructor (
-    private readonly loadAdmRepo: LoadAdmAccountRepository,
-    private readonly createAdmRepo: CreateAdmAccountRepository
+    private readonly AdmAccountRepo: LoadAdmAccountRepository & CreateAdmAccountRepository
   ) { }
 
   async perform (params: LoadAdmAccountRepository.Params): Promise<AuthenticationError> {
-    await this.loadAdmRepo.loadAdm(params)
-    await this.createAdmRepo.createAdm({
+    await this.AdmAccountRepo.loadAdm(params)
+    await this.AdmAccountRepo.createAdm({
       user: 'any_user',
       password: 'any_password',
       email: 'any_email',

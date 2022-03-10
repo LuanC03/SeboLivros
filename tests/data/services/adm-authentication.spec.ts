@@ -6,31 +6,30 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 type SutTypes = {
   sut: AuthenticationService
-  loadAuthenticationAdmApi: MockProxy<LoadAdmAccountRepository>
+  admAccountApi: MockProxy<LoadAdmAccountRepository & CreateAdmAccountRepository>
 }
 
 const makeSut = (): SutTypes => {
-  const loadAuthenticationAdmApi = mock<LoadAdmAccountRepository>()
-  const createAdmApi = mock<CreateAdmAccountRepository>()
-  const sut = new AuthenticationService(loadAuthenticationAdmApi, createAdmApi)
-  loadAuthenticationAdmApi.loadAdm.mockResolvedValue({
+  const admAccountApi = mock<LoadAdmAccountRepository & CreateAdmAccountRepository>()
+  const sut = new AuthenticationService(admAccountApi)
+  admAccountApi.loadAdm.mockResolvedValue({
     name: 'any_name',
     email: 'any_email',
     user: 'any_user',
     id: 123
   })
-  return { sut, loadAuthenticationAdmApi }
+  return { sut, admAccountApi }
 }
 describe('AuthenticationService', () => {
   it('testando a autenticação do ADM via user e password', async () => {
-    const { sut, loadAuthenticationAdmApi } = makeSut()
+    const { sut, admAccountApi } = makeSut()
     await sut.perform({ user: 'any_user', password: 'any_password' })
-    expect(loadAuthenticationAdmApi.loadAdm).toHaveBeenCalledWith({ user: 'any_user', password: 'any_password' })
+    expect(admAccountApi.loadAdm).toHaveBeenCalledWith({ user: 'any_user', password: 'any_password' })
   })
 
   it('testando erro na autenticação', async () => {
-    const { sut, loadAuthenticationAdmApi } = makeSut()
-    loadAuthenticationAdmApi.loadAdm.mockResolvedValueOnce(undefined)
+    const { sut, admAccountApi } = makeSut()
+    admAccountApi.loadAdm.mockResolvedValueOnce(undefined)
     const sutResult = await sut.perform({ user: 'any_user', password: 'any_password' })
     expect(sutResult).toEqual(new AuthenticationError())
   })
