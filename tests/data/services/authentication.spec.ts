@@ -1,32 +1,21 @@
-import { LoadAuthenticationAdmApi } from '@/data/contracts/apis'
+import { LoadAdmAccountRepository } from '@/data/contracts/repos'
 import { AuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
 
-class LoadAuthenticationAdmApiSpy implements LoadAuthenticationAdmApi {
-  user?: string
-  password?: string
-  result = undefined
-
-  async loadAdm (params: LoadAuthenticationAdmApi.Params): Promise<LoadAuthenticationAdmApi.Result> {
-    this.password = params.password
-    this.user = params.user
-    return this.result
-  }
-}
+import { mock } from 'jest-mock-extended'
 describe('AuthenticationService', () => {
   it('testando a autenticação do ADM via user e password', async () => {
-    const loadAuthenticationAdmApi = new LoadAuthenticationAdmApiSpy()
+    const loadAuthenticationAdmApi = mock < LoadAdmAccountRepository>()
     const sut = new AuthenticationService(loadAuthenticationAdmApi)
 
     await sut.perform({ user: 'any_user', password: 'any_password' })
 
-    expect(loadAuthenticationAdmApi.user).toBe('any_user')
-    expect(loadAuthenticationAdmApi.password).toBe('any_password')
+    expect(loadAuthenticationAdmApi.loadAdm).toHaveBeenCalledWith({ user: 'any_user', password: 'any_password' })
   })
 
   it('testando erro na autenticação', async () => {
-    const loadAuthenticationAdmApi = new LoadAuthenticationAdmApiSpy()
-    loadAuthenticationAdmApi.result = undefined
+    const loadAuthenticationAdmApi = mock<LoadAdmAccountRepository>()
+    loadAuthenticationAdmApi.loadAdm.mockResolvedValueOnce(undefined)
     const sut = new AuthenticationService(loadAuthenticationAdmApi)
 
     const sutResult = await sut.perform({ user: 'any_user', password: 'any_password' })

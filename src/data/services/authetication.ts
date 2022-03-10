@@ -1,14 +1,14 @@
 import { AuthenticationError } from '@/domain/errors'
 import { Authentication } from '@/domain/features/authentication'
-import { LoadAuthenticationAdmApi } from '@/data/contracts/apis'
+import { LoadAdmAccountRepository } from '@/data/contracts/repos'
 
 export class AuthenticationService {
   constructor (
-    private readonly loadAuthenticationAdmApi: LoadAuthenticationAdmApi
+    private readonly loadAuthenticationAdmRepo: LoadAdmAccountRepository
   ) { }
 
   async perform (params: Authentication.Params): Promise<AuthenticationError> {
-    await this.loadAuthenticationAdmApi.loadAdm(params)
+    await this.loadAuthenticationAdmRepo.loadAdm(params)
     return new AuthenticationError()
   }
 }
