@@ -34,25 +34,4 @@ describe('AuthenticationService', () => {
     const sutResult = await sut.perform({ user: 'any_user', password: 'any_password' })
     expect(sutResult).toEqual(new AuthenticationError())
   })
-
-  it('testando a criação do ADM via parametros', async () => {
-    const { sut, admAccountApi } = makeSut()
-    await sut.perform({ user: 'any_user', password: 'any_password' })
-    expect(admAccountApi.createAdm).toHaveBeenCalledWith({
-      user: 'any_user',
-      password: 'any_password',
-      email: 'any_email',
-      name: 'any_name'
-    })
-  })
-
-  it('testando a criação do ADM via parametros', async () => {
-    const { sut, admAccountApi } = makeSut()
-    await sut.perform({ user: 'any_user', password: 'any_password' })
-    expect(admAccountApi.updateAdm).toHaveBeenCalledWith({
-      password: 'any_password',
-      email: 'any_email',
-      name: 'any_name'
-    })
-  })
 })

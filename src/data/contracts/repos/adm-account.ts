@@ -1,6 +1,8 @@
 /* import { AccessToken } from '@/domain/models'
 import { AuthenticationError } from '@/domain/errors' */
 
+import { AdmAccount } from '@/domain/models'
+
 export interface LoadAdmAccountRepository {
   loadAdm: (params: LoadAdmAccountRepository.Params) => Promise<LoadAdmAccountRepository.Result>
 }
@@ -21,7 +23,7 @@ export namespace LoadAdmAccountRepository {
 }
 
 export interface CreateAdmAccountRepository {
-  createAdm: (params: CreateAdmAccountRepository.Params) => Promise<void>
+  createAdm: (params: CreateAdmAccountRepository.Params) => Promise<AdmAccount>
 }
 
 export namespace CreateAdmAccountRepository {
