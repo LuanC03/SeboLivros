@@ -4,6 +4,7 @@ import { AuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
 
 import { mock, MockProxy } from 'jest-mock-extended'
+import { AccessToken } from '@/domain/models'
 
 type SutTypes = {
   sut: AuthenticationService
@@ -40,9 +41,8 @@ describe('AuthenticationService', () => {
   })
 
   it('testando erro na autenticação', async () => {
-    const { sut, admAccountApi } = makeSut()
+    const { sut } = makeSut()
 
-    admAccountApi.loadAdm.mockResolvedValueOnce(undefined)
     const sutResult = await sut.perform({ username: 'any_user', password: 'any_password' })
 
     expect(sutResult).toEqual(new AuthenticationError())
@@ -54,6 +54,6 @@ describe('AuthenticationService', () => {
 
     await sut.perform({ username: 'any_user', password: 'any_password' })
 
-    expect(crypto.generateToken).toHaveBeenCalledWith({ token: adm?.email })
+    expect(crypto.generateToken).toHaveBeenCalledWith({ token: adm?.email, expirationInMs: AccessToken.expirationInMs })
   })
 })

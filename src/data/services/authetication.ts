@@ -1,6 +1,7 @@
 import { AuthenticationError } from '@/domain/errors'
 import { TokenGenerator } from '@/data/contracts/crypto/token'
 import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '../contracts/repos/adm-account'
+import { AccessToken } from '@/domain/models'
 
 export class AuthenticationService {
   constructor (
@@ -22,7 +23,7 @@ export class AuthenticationService {
         email: loadUser.email,
         name: loadUser.name
       })
-      await this.crypto.generateToken({ token: loadUser.email })
+      await this.crypto.generateToken({ token: loadUser.email, expirationInMs: AccessToken.expirationInMs })
     }
     return new AuthenticationError()
   }

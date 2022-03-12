@@ -2,7 +2,7 @@
 import { AuthenticationError } from '@/domain/errors' */
 
 export interface LoadAdmAccountRepository {
-  loadAdm: (params: LoadAdmAccountRepository.Params) => Promise<LoadAdmAccountRepository.Result>
+  loadAdm: (params: LoadAdmAccountRepository.Params) => Promise<LoadAdmAccountRepository.ResultAdm>
 }
 
 export namespace LoadAdmAccountRepository {
@@ -11,13 +11,13 @@ export namespace LoadAdmAccountRepository {
     password: string
   }
 
-  export type Result = undefined | {
+  export type ResultAdm = {
     name: string
     email: string
     username: string
     id: number
     password: string
-  }
+  } | undefined
 }
 
 export interface CreateAdmAccountRepository {
