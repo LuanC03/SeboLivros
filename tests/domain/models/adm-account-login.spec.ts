@@ -1,5 +1,5 @@
 import { TokenGenerator } from '@/data/contracts/crypto/token'
-import { LoadAdmAccountRepository, CreateAdmAccountRepository, UpdateAdmAccountRepository } from '@/data/contracts/repos'
+import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos/adm-account'
 import { AuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
 
