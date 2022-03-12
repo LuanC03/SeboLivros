@@ -1,13 +1,13 @@
 import { TokenGenerator } from '@/data/contracts/crypto/token'
 import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos/adm-account'
-import { AuthenticationService } from '@/data/services'
+import { AdmService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
 import { AccessToken } from '@/domain/models'
 
 import { mock, MockProxy } from 'jest-mock-extended'
 
 type SutTypes = {
-  sut: AuthenticationService
+  sut: AdmService
   admAccountApi: MockProxy<LoadAdmAccountRepository & CreateAdmAccountRepository & UpdateAdmAccountRepository>
   crypto: MockProxy<TokenGenerator>
 }
@@ -15,7 +15,7 @@ type SutTypes = {
 const makeSut = (): SutTypes => {
   const admAccountApi = mock<LoadAdmAccountRepository & CreateAdmAccountRepository & UpdateAdmAccountRepository>()
   const crypto = mock<TokenGenerator>()
-  const sut = new AuthenticationService(admAccountApi, crypto)
+  const sut = new AdmService(admAccountApi, crypto)
   admAccountApi.createAdm.mockResolvedValue({
     name: 'any_name',
     email: 'any_email',

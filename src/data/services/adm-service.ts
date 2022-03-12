@@ -3,7 +3,7 @@ import { TokenGenerator } from '@/data/contracts/crypto/token'
 import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '../contracts/repos/adm-account'
 import { AccessToken } from '@/domain/models'
 
-export class AuthenticationService {
+export class AdmService {
   constructor (
     private readonly AdmAccountRepo: LoadAdmAccountRepository & CreateAdmAccountRepository & UpdateAdmAccountRepository,
     private readonly crypto: TokenGenerator
