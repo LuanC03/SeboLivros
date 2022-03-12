@@ -1,5 +1,5 @@
 import { TokenGenerator } from '@/data/contracts/crypto/token'
-import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos/adm-account'
+import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos/adm-account-repo'
 import { AdmService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
 import { AccessToken } from '@/domain/models'
@@ -43,7 +43,7 @@ describe('AuthenticationService', () => {
   it('testando erro na autenticação', async () => {
     const { sut } = makeSut()
 
-    const sutResult = await sut.perform({ username: 'any_user', password: 'any_password' })
+    const sutResult = await sut.perform({ username: 'any_user', password: 'any_passworad' })
 
     expect(sutResult).toEqual(new AuthenticationError())
   })

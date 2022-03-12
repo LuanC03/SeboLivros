@@ -1,1 +1,1 @@
-export * from './adm-account'
+export * from './adm-account-repo'

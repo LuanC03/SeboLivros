@@ -19,7 +19,7 @@ describe('Book-Create', () => {
   it('testando o update do livro via todos os parametros', async () => {
     const sut = makeSut()
 
-    expect(sut.updateAdmAccount({
+    expect(sut.updateBook({
       edition: 5,
       conservationStateOld: 'novo',
       conservationStateNew: 'usado',
@@ -41,7 +41,7 @@ describe('Book-Create', () => {
   it('testando o update do livro, utilizando só a edição', async () => {
     const sut = makeSut()
 
-    expect(sut.updateAdmAccount({
+    expect(sut.updateBook({
       edition: 5
     })).toEqual({
       id: sut.id,
@@ -59,7 +59,7 @@ describe('Book-Create', () => {
   it('testando o update do livro, utilizando só o Id da Instituição', async () => {
     const sut = makeSut()
 
-    expect(sut.updateAdmAccount({
+    expect(sut.updateBook({
       institutionId: '123'
     })).toEqual({
       id: sut.id,
@@ -77,7 +77,7 @@ describe('Book-Create', () => {
   it('testando o update do livro, alterando as quatidades dos livros', async () => {
     const sut = makeSut()
 
-    expect(sut.updateAdmAccount({
+    expect(sut.updateBook({
       conservationStateOld: 'novo',
       conservationStateNew: 'danificado',
       numberOfBooksChanged: 3
@@ -94,11 +94,11 @@ describe('Book-Create', () => {
       institutionAddress: 'any_address'
     })
   })
-  it('testando o erro no update do livro, passando parametro de tipo errado', async () => {
+  it('testando o erro no update do livro, passando parametro de', async () => {
     const sut = makeSut()
 
-    expect(sut.updateAdmAccount({
-      conservationStateOld: 'Rasgado',
+    expect(sut.updateBook({
+      conservationStateOld: 'Estado errado',
       conservationStateNew: 'danificado',
       numberOfBooksChanged: 3
     })).toEqual(new UpdateBookError())

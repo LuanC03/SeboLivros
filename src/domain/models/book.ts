@@ -40,6 +40,7 @@ export namespace BookCreate {
     institutionId: string
     institutionAddress: string
   }
+  export type Result = Params
 }
 export class Book {
   id: string
@@ -85,7 +86,7 @@ export class Book {
     }
   }
 
-  updateAdmAccount (model: BookUpdate.Params): BookUpdate.Result | UpdateBookError {
+  updateBook (model: BookUpdate.Params): BookUpdate.Result | UpdateBookError {
     if (model.institutionId !== undefined && model.institutionId !== this.institutionId) {
       this.institutionId = model.institutionId
     }

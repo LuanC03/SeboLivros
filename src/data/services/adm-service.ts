@@ -1,6 +1,6 @@
 import { AuthenticationError } from '@/domain/errors'
 import { TokenGenerator } from '@/data/contracts/crypto/token'
-import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '../contracts/repos/adm-account'
+import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '../contracts/repos/adm-account-repo'
 import { AccessToken } from '@/domain/models'
 
 export class AdmService {
