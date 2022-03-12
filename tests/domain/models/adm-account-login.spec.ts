@@ -2,9 +2,9 @@ import { TokenGenerator } from '@/data/contracts/crypto/token'
 import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos/adm-account'
 import { AuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
+import { AccessToken } from '@/domain/models'
 
 import { mock, MockProxy } from 'jest-mock-extended'
-import { AccessToken } from '@/domain/models'
 
 type SutTypes = {
   sut: AuthenticationService

@@ -40,7 +40,7 @@ export namespace CreateAdmAccountRepository {
 }
 
 export interface UpdateAdmAccountRepository {
-  updateAdm: (params: UpdateAdmAccountRepository.Params) => Promise<void>
+  updateAdm: (params: UpdateAdmAccountRepository.Params) => Promise<UpdateAdmAccountRepository.Result>
 }
 
 export namespace UpdateAdmAccountRepository {
@@ -48,6 +48,13 @@ export namespace UpdateAdmAccountRepository {
     password: string
     email: string
     name: string
+  }
+  export type Result = {
+    id: number
+    name: string
+    email: string
+    password: string
+    username: string
   }
 
 }
