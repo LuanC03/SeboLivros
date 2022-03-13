@@ -1,19 +1,15 @@
-import { InstitutionFeature } from '@/domain/features'
+import { CreateInstitutionApi } from '@/data/contracts/apis'
 
 class InstitutionService {
   constructor (private readonly createInstitutionApi: CreateInstitutionApi) {}
 
-  async createInstitution (params: InstitutionFeature.Params): Promise<void> {
+  async createInstitution (params: CreateInstitutionApi.Params): Promise<void> {
     await this.createInstitutionApi.createInstitution(params)
   }
 }
-interface CreateInstitutionApi{
-  createInstitution: (params: InstitutionFeature.Params) => Promise<void>
-}
-
 class CreateInstitutionApiSpy implements CreateInstitutionApi {
-  params?: InstitutionFeature.Params
-  async createInstitution (params: InstitutionFeature.Params): Promise<void> {
+  params?: CreateInstitutionApi.Params
+  async createInstitution (params: CreateInstitutionApi.Params): Promise<void> {
     this.params = params
   }
 }
