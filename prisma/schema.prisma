@@ -9,3 +9,61 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Library {
+  id          String       @id @default(uuid())
+  institution Institution?
+  books       Book[]
+
+  @@map("library")
+}
+
+model Administrator {
+  id          String       @id @default(uuid())
+  email       String       @unique
+  username    String       @unique
+  password    String
+  institution Institution?
+
+  @@map("administrators")
+}
+
+model Address {
+  id          String       @id @default(uuid())
+  street      String
+  district    String
+  city        String
+  uf          String
+  complement  String
+  cep         Decimal
+  institution Institution?
+
+  @@map("addresses")
+}
+
+model Institution {
+  id              String        @id @default(uuid())
+  name            String        @unique
+  address         Address       @relation(fields: [addressId], references: [id])
+  addressId       String        @unique
+  administrator   Administrator @relation(fields: [administratorId], references: [id])
+  administratorId String        @unique
+  library         Library       @relation(fields: [libraryId], references: [id])
+  libraryId       String        @unique
+
+  @@map("institutions")
+}
+
+model Book {
+  id                       String   @id @default(uuid())
+  name                     String
+  edition                  Decimal
+  releaseYear              Decimal
+  releaseDate              DateTime
+  conservationStateUsed    Decimal
+  conservationStateNew     Decimal
+  conservationStateDamaged Decimal
+  library                  Library  @relation(fields: [libraryId], references: [id])
+  libraryId                String
+  institutionAddress       String
+}

@@ -55,7 +55,7 @@ export class Book {
   institutionAddress: string
 
   constructor (params: BookCreate.Params) {
-    this.id = randomUUID()
+    this.id = params.id ?? randomUUID()
     this.name = params.name
     this.edition = params.edition
     this.releaseYear = params.releaseYear
