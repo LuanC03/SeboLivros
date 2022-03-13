@@ -1,12 +1,6 @@
 import { CreateInstitutionApi } from '@/data/contracts/apis'
+import { InstitutionService } from '@/data/services'
 
-class InstitutionService {
-  constructor (private readonly createInstitutionApi: CreateInstitutionApi) {}
-
-  async createInstitution (params: CreateInstitutionApi.Params): Promise<void> {
-    await this.createInstitutionApi.createInstitution(params)
-  }
-}
 class CreateInstitutionApiSpy implements CreateInstitutionApi {
   params?: CreateInstitutionApi.Params
   async createInstitution (params: CreateInstitutionApi.Params): Promise<void> {
