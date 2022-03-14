@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "server": "ts-node-dev src/main/api/server.ts",
+    "server": "ts-node-dev src/main/index.ts",
     "start": "node dist/main/api",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint .",
