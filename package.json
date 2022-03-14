@@ -45,6 +45,7 @@
     "node": "16.x"
   },
   "dependencies": {
+    "@prisma/client": "^3.10.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "module-alias": "^2.2.2",
