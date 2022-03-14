@@ -1,5 +1,3 @@
-import { randomInt } from 'crypto'
-
 export type AdmParams = {
   name: string
   email: string
@@ -14,14 +12,12 @@ export namespace AdmUpdateResult {
   }
 }
 export class AdmAccount {
-  id: number
   name: string
   email: string
   password: string
   username: string
 
   constructor (params: AdmParams) {
-    this.id = randomInt(1, 100000)
     this.name = params.name
     this.email = params.email
     this.password = params.password

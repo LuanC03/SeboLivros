@@ -14,7 +14,6 @@ describe('Adm-Account-Create', () => {
     const sut = makeSut()
 
     expect(sut).toEqual({
-      id: sut.id,
       username: 'any_user',
       password: 'any_password',
       email: 'any_email',
