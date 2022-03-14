@@ -23,6 +23,7 @@ model Administrator {
   email       String       @unique
   username    String       @unique
   password    String
+  name        String
   institution Institution?
 
   @@map("administrators")
