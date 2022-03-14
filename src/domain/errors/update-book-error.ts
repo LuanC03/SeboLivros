@@ -1,6 +1,6 @@
 export class UpdateBookError extends Error {
-  constructor () {
-    super('Update Falied')
+  constructor (message: string) {
+    super(`Update Falied: ${message}`)
     this.name = 'UpdateBookError'
   }
 }

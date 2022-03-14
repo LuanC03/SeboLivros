@@ -1,9 +1,10 @@
-import { Book } from '@/domain/models'
+import { BookService } from '@/data/services'
 import { UpdateBookError } from '@/domain/errors'
 
 describe('Book-Create', () => {
-  function makeSut (): Book {
-    return new Book({
+  function makeSut (): BookService {
+    return new BookService({
+      id: '123',
       name: 'Livro1',
       edition: 3,
       releaseYear: 2012,
@@ -11,7 +12,7 @@ describe('Book-Create', () => {
       conservationStateUsed: 10,
       conservationStateNew: 13,
       conservationStateDamaged: 2,
-      institutionId: 'any_Id',
+      libraryId: 'any_Id',
       institutionAddress: 'any_address'
     })
   }
@@ -20,13 +21,14 @@ describe('Book-Create', () => {
     const sut = makeSut()
 
     expect(sut.updateBook({
+      bookId: sut.id!,
       edition: 5,
       conservationStateOld: 'novo',
       conservationStateNew: 'usado',
       numberOfBooksChanged: 2,
-      institutionId: '123'
+      libraryId: '345'
     })).toEqual({
-      id: sut.id,
+      id: '123',
       name: 'Livro1',
       edition: 5,
       releaseYear: 2012,
@@ -34,7 +36,7 @@ describe('Book-Create', () => {
       conservationStateUsed: 12,
       conservationStateNew: 11,
       conservationStateDamaged: 2,
-      institutionId: '123',
+      libraryId: '345',
       institutionAddress: 'any_address'
     })
   })
@@ -42,6 +44,7 @@ describe('Book-Create', () => {
     const sut = makeSut()
 
     expect(sut.updateBook({
+      bookId: sut.id!,
       edition: 5
     })).toEqual({
       id: sut.id,
@@ -52,7 +55,7 @@ describe('Book-Create', () => {
       conservationStateUsed: 10,
       conservationStateNew: 13,
       conservationStateDamaged: 2,
-      institutionId: 'any_Id',
+      libraryId: 'any_Id',
       institutionAddress: 'any_address'
     })
   })
@@ -60,7 +63,8 @@ describe('Book-Create', () => {
     const sut = makeSut()
 
     expect(sut.updateBook({
-      institutionId: '123'
+      bookId: sut.id!,
+      libraryId: '123'
     })).toEqual({
       id: sut.id,
       name: 'Livro1',
@@ -70,7 +74,7 @@ describe('Book-Create', () => {
       conservationStateUsed: 10,
       conservationStateNew: 13,
       conservationStateDamaged: 2,
-      institutionId: '123',
+      libraryId: '123',
       institutionAddress: 'any_address'
     })
   })
@@ -78,6 +82,7 @@ describe('Book-Create', () => {
     const sut = makeSut()
 
     expect(sut.updateBook({
+      bookId: sut.id!,
       conservationStateOld: 'novo',
       conservationStateNew: 'danificado',
       numberOfBooksChanged: 3
@@ -90,17 +95,18 @@ describe('Book-Create', () => {
       conservationStateUsed: 10,
       conservationStateNew: 10,
       conservationStateDamaged: 5,
-      institutionId: 'any_Id',
+      libraryId: 'any_Id',
       institutionAddress: 'any_address'
     })
   })
-  it('testando o erro no update do livro, passando parametro de', async () => {
+  it('testando o erro no update do livro, passando parametro de conservação inexistente', async () => {
     const sut = makeSut()
 
     expect(sut.updateBook({
-      conservationStateOld: 'Estado errado',
+      bookId: sut.id!,
+      conservationStateOld: 'Estado erradoaa',
       conservationStateNew: 'danificado',
       numberOfBooksChanged: 3
-    })).toEqual(new UpdateBookError())
+    })).toEqual(new UpdateBookError('O tipo de conservação não existe!'))
   })
 })

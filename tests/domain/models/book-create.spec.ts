@@ -1,8 +1,9 @@
-import { Book } from '@/domain/models'
+import { BookService } from '@/data/services'
 
 describe('Book-Create', () => {
-  function makeSut (): Book {
-    return new Book({
+  function makeSut (): BookService {
+    return new BookService({
+      id: '123',
       name: 'Livro1',
       edition: 3,
       releaseYear: 2012,
@@ -10,7 +11,7 @@ describe('Book-Create', () => {
       conservationStateUsed: 10,
       conservationStateNew: 13,
       conservationStateDamaged: 2,
-      institutionId: 'any_Id',
+      libraryId: 'any_Id',
       institutionAddress: 'any_address'
     })
   }
@@ -27,7 +28,7 @@ describe('Book-Create', () => {
       conservationStateUsed: 10,
       conservationStateNew: 13,
       conservationStateDamaged: 2,
-      institutionId: 'any_Id',
+      libraryId: 'any_Id',
       institutionAddress: 'any_address'
     })
   })
