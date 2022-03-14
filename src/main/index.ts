@@ -1,6 +1,5 @@
 import './config/module-alias'
+import { app } from '@/main/config/app'
+import { env } from '@/main/config/env'
 
-import express from 'express'
-
-const app = express()
-app.listen(3000, () => console.log('server no ar'))
+app.listen(env.port, () => console.log(`server no ar. Porta ${env.port}`))

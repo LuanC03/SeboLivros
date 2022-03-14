@@ -1,6 +1,6 @@
 import { randomInt } from 'crypto'
 
-type AdmParams = {
+export type AdmParams = {
   name: string
   email: string
   username: string

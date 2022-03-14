@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "server": "ts-node-dev src/main/index.ts",
-    "start": "node dist/main/api",
+    "start": "node dist/main",
     "build": "rimraf dist && tsc -p tsconfig-build.json",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/module-alias": "^2.0.1",
@@ -44,6 +45,7 @@
     "node": "16.x"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "module-alias": "^2.2.2",
     "rimraf": "^3.0.2",
