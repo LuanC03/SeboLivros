@@ -1,6 +1,6 @@
-import { AuthenticationError } from '@/domain/errors'
+import { AuthenticationAdmError } from '@/domain/errors'
 import { TokenGenerator } from '@/data/contracts/crypto/token'
-import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos'
+import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository, prismaClient } from '@/data/contracts/repos'
 import { AccessToken, AdmAccount } from '@/domain/models'
 
 export class AdmService {
@@ -9,22 +9,21 @@ export class AdmService {
     private readonly crypto: TokenGenerator
   ) { }
 
-  async load (params: LoadAdmAccountRepository.Params): Promise<AdmAccount|AuthenticationError> {
-    const loadUser = await this.AdmAccountRepo.loadAdm(params)
-    await this.AdmAccountRepo.createAdm({
-      username: 'any_user',
-      password: 'any_password',
-      email: 'any_email',
-      name: 'any_name'
-    })
-    if (loadUser !== undefined) {
-      await this.AdmAccountRepo.updateAdm({
-        password: loadUser.password,
-        email: loadUser.email,
-        name: loadUser.name
-      })
+  async load (params: LoadAdmAccountRepository.Params): Promise<AdmAccount | AuthenticationAdmError> {
+    const loadUser = await prismaClient.administrator.findFirst({ where: { username: params.username } })/* await this.AdmAccountRepo.loadAdm(params) */
+    console.log(loadUser?.email)
+    if (loadUser != null) {
       await this.crypto.generateToken({ token: loadUser.email, expirationInMs: AccessToken.expirationInMs })
     }
-    return new AuthenticationError()
+    return new AuthenticationAdmError()
+  }
+
+  async create (params: CreateAdmAccountRepository.Params): Promise<AdmAccount | AuthenticationAdmError> {
+    const loadUser = await this.AdmAccountRepo.loadAdm(params)
+    console.log(loadUser?.email)
+    if (loadUser !== undefined) {
+      await this.crypto.generateToken({ token: loadUser.email, expirationInMs: AccessToken.expirationInMs })
+    }
+    return new AuthenticationAdmError()
   }
 }
