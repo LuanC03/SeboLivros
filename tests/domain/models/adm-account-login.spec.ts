@@ -1,7 +1,7 @@
 import { TokenGenerator } from '@/data/contracts/crypto/token'
 import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '@/data/contracts/repos/adm-account-repo'
 import { AdmService } from '@/data/services'
-import { AuthenticationError } from '@/domain/errors'
+import { AuthenticationAdmError } from '@/domain/errors'
 import { AccessToken } from '@/domain/models'
 
 import { mock, MockProxy } from 'jest-mock-extended'
@@ -32,20 +32,33 @@ const makeSut = (): SutTypes => {
   return { sut, admAccountApi, crypto }
 }
 describe('AuthenticationService', () => {
-  it('testando a autenticação do ADM via user e password', async () => {
-    const { sut, admAccountApi } = makeSut()
+  it('testando a autenticação do ADM via user e password mockados', async () => {
+    const { admAccountApi } = makeSut()
 
-    await sut.load({ username: 'any_user', password: 'any_password' })
+    await admAccountApi.loadAdm({ username: 'any_user', password: 'any_password' })
 
     expect(admAccountApi.loadAdm).toHaveBeenCalledWith({ username: 'any_user', password: 'any_password' })
   })
+
+  /* it('testando a autenticação do ADM via user e password', async () => {
+    const { sut } = makeSut()
+    await sut.create({
+      name: 'any_name',
+      email: 'any_email',
+      username: 'any_user',
+      password: 'any_password'
+    })
+    const adm = await sut.load({ username: 'any_user', password: 'any_password' })
+
+    expect(adm).toHaveBeenCalledWith({ username: 'any_user', password: 'any_password' })
+  }) */
 
   it('testando erro na autenticação', async () => {
     const { sut } = makeSut()
 
     const sutResult = await sut.load({ username: 'any_user', password: 'any_passworad' })
 
-    expect(sutResult).toEqual(new AuthenticationError())
+    expect(sutResult).toEqual(new AuthenticationAdmError())
   })
 
   it('testando TokenGenerator', async () => {
