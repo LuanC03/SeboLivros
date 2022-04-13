@@ -35,7 +35,7 @@ describe('AuthenticationService', () => {
   it('testando a autenticação do ADM via user e password', async () => {
     const { sut, admAccountApi } = makeSut()
 
-    await sut.perform({ username: 'any_user', password: 'any_password' })
+    await sut.load({ username: 'any_user', password: 'any_password' })
 
     expect(admAccountApi.loadAdm).toHaveBeenCalledWith({ username: 'any_user', password: 'any_password' })
   })
@@ -43,7 +43,7 @@ describe('AuthenticationService', () => {
   it('testando erro na autenticação', async () => {
     const { sut } = makeSut()
 
-    const sutResult = await sut.perform({ username: 'any_user', password: 'any_passworad' })
+    const sutResult = await sut.load({ username: 'any_user', password: 'any_passworad' })
 
     expect(sutResult).toEqual(new AuthenticationError())
   })
@@ -52,7 +52,7 @@ describe('AuthenticationService', () => {
     const { sut, admAccountApi, crypto } = makeSut()
     const adm = await admAccountApi.loadAdm({ username: 'any_user', password: 'any_password' })
 
-    await sut.perform({ username: 'any_user', password: 'any_password' })
+    await sut.load({ username: 'any_user', password: 'any_password' })
 
     expect(crypto.generateToken).toHaveBeenCalledWith({ token: adm?.email, expirationInMs: AccessToken.expirationInMs })
   })
