@@ -1,7 +1,7 @@
 import { AuthenticationError } from '@/domain/errors'
 import { TokenGenerator } from '@/data/contracts/crypto/token'
 import { UpdateAdmAccountRepository, LoadAdmAccountRepository, CreateAdmAccountRepository } from '../contracts/repos/adm-account-repo'
-import { AccessToken } from '@/domain/models'
+import { AccessToken, AdmAccount } from '@/domain/models'
 
 export class AdmService {
   constructor (
@@ -9,7 +9,7 @@ export class AdmService {
     private readonly crypto: TokenGenerator
   ) { }
 
-  async perform (params: LoadAdmAccountRepository.Params): Promise<AuthenticationError> {
+  async perform (params: LoadAdmAccountRepository.Params): Promise<AdmAccount|AuthenticationError> {
     const loadUser = await this.AdmAccountRepo.loadAdm(params)
     await this.AdmAccountRepo.createAdm({
       username: 'any_user',
