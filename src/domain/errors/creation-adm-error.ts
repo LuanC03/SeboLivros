@@ -1,6 +1,6 @@
 export class CreationAdmError extends Error {
-  constructor () {
-    super('Creation failed')
+  constructor (message: string) {
+    super(`Creation Falied: ${message}`)
     this.name = 'CreationError'
   }
 }
