@@ -1,20 +1,10 @@
 import { Request, Response, Router } from 'express'
 import { prismaClient } from '@/data/contracts/repos'
-/* import { AdminCreateController } from '@/application/controllers' */
+import { AdminCreateController } from '@/application/controllers'
 
 export default (router: Router): void => {
-  router.post('/api/adm/', /* new AdminCreateController().handle) */ async (req: Request, res: Response) => {
-    const { name, email, username, password } = req.body
-    console.log(name)
-    try {
-      const adm = await prismaClient.administrator.create({
-        data: { name: name, email: email, username: username, password: password }
-      })
-      res.status(201).send(adm)
-    } catch (error) {
-      res.status(400).send(error)
-    }
-  })
+  router.post('/api/adm/', new AdminCreateController().handle)
+
   router.get('/api/adm/', /* new AdminCreateController().handle) */async (req: Request, res: Response) => {
     const { name, email, username, password } = req.body
     console.log(name)
