@@ -42,15 +42,15 @@ describe('AuthenticationService', () => {
 
   /* it('testando a autenticação do ADM via user e password', async () => {
     const { sut } = makeSut()
-    await sut.create({
+    const adm = await sut.create({
       name: 'any_name',
       email: 'any_email',
       username: 'any_user',
       password: 'any_password'
     })
-    const adm = await sut.load({ username: 'any_user', password: 'any_password' })
-
-    expect(adm).toHaveBeenCalledWith({ username: 'any_user', password: 'any_password' })
+    const load = await sut.load({ username: 'any_user1', password: 'any_password' })
+    console.log(load.toString)
+    expect(adm).toStrictEqual(load)
   }) */
 
   it('testando erro na autenticação', async () => {
