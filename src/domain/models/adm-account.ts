@@ -1,4 +1,5 @@
 export type AdmParams = {
+  id?: string
   name: string
   email: string
   username: string
@@ -12,12 +13,14 @@ export namespace AdmUpdateResult {
   }
 }
 export class AdmAccount {
+  id?: string
   name: string
   email: string
   password: string
   username: string
 
   constructor (params: AdmParams) {
+    this.id = params.id
     this.name = params.name
     this.email = params.email
     this.password = params.password
