@@ -1,3 +1,5 @@
+import { CreationAdmError } from '@/domain/errors'
+
 export interface LoadAdmAccountRepository {
   loadAdm: (params: LoadAdmAccountRepository.Params) => Promise<LoadAdmAccountRepository.ResultAdm>
 }
@@ -33,7 +35,7 @@ export namespace CreateAdmAccountRepository {
     email: string
     username: string
     password: string
-  }
+  } | CreationAdmError
 }
 
 export interface UpdateAdmAccountRepository {
