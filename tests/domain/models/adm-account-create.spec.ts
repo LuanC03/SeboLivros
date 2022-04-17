@@ -1,18 +1,18 @@
 import { TokenGenerator } from '@/data/contracts/crypto/token'
-import { CreateAdmAccountRepository, LoadAdmAccountRepository, UpdateAdmAccountRepository } from '@/data/contracts/repos'
+import { CreateAdmAccountRepository, LoadAdmAccountRepository, UpdateAdmAccountRepository, DeleteAdmAccountRepository } from '@/data/contracts/repos'
 import { AdmService } from '@/data/services'
+import { CreationAdmError } from '@/domain/errors'
 
 import { mock, MockProxy } from 'jest-mock-extended'
-import { CreationAdmError } from '@/domain/errors'
 
 type SutTypes = {
   sut: AdmService
-  admAccountApi: MockProxy<LoadAdmAccountRepository & CreateAdmAccountRepository & UpdateAdmAccountRepository>
+  admAccountApi: MockProxy<LoadAdmAccountRepository & CreateAdmAccountRepository & DeleteAdmAccountRepository & UpdateAdmAccountRepository>
   crypto: MockProxy<TokenGenerator>
 }
 
 const makeSut = (): SutTypes => {
-  const admAccountApi = mock<LoadAdmAccountRepository & CreateAdmAccountRepository & UpdateAdmAccountRepository>()
+  const admAccountApi = mock<LoadAdmAccountRepository & CreateAdmAccountRepository & DeleteAdmAccountRepository & UpdateAdmAccountRepository>()
   const crypto = mock<TokenGenerator>()
   const sut = new AdmService(admAccountApi, crypto)
   admAccountApi.createAdm.mockResolvedValue({
@@ -45,27 +45,24 @@ describe('Adm-Account-Create', () => {
   it('testando erro na criação mockada', async () => {
     const { sut } = makeSut()
 
-    const sutResult = await sut.create({
+    expect(await sut.create({
       name: 'any_name',
       email: 'any_email',
       username: 'any_user',
       password: ''
-    })
-
-    expect(sutResult).toEqual(new CreationAdmError('Erro na criação'))
+    })).toEqual(new CreationAdmError('Erro na criação'))
   })
 
-  /*  it('testando a autenticação do ADM via user e password', async () => {
+  /*  it('testando a criação do ADM via user e password', async () => {
     const { sut } = makeSut()
-    const adm = await sut.create({
+    const result = await sut.create({
       name: 'any_name',
       email: 'any_email',
-      username: 'any_user',
-      password: 'any_password'
+      password: 'any_password',
+      username: 'any_user'
     })
-    const load = await sut.load({ username: 'any_user1', password: 'any_password' })
-    console.log(load.toString)
-    expect(adm).toStrictEqual(load)
+    // precisa excluir o adm criado do bd após o teste
+    expect(result).toEqual('any_email')
   }) */
 }
 )
