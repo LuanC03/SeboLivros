@@ -57,3 +57,13 @@ export namespace UpdateAdmAccountRepository {
   }
 
 }
+
+export interface DeleteAdmAccountRepository {
+  deleteAdm: (params: DeleteAdmAccountRepository.Params) => Promise<DeleteAdmAccountRepository.Result>
+}
+
+export namespace DeleteAdmAccountRepository {
+  export type Params = { email: string | CreationAdmError }
+
+  export type Result = { result: string }
+}
